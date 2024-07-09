@@ -6,3 +6,13 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Trip{
+  id Int @id @default(autoincrement())
+  destination String
+  starts_at DateTime
+  ends_at DateTime
+  is_confirmed Boolean @default(false)
+  created_at DateTime @default(now())
+
+}
