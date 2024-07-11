@@ -5,8 +5,9 @@ export const tripSchema = z.object({
     starts_at: z.coerce.date(),
     ends_at: z.coerce.date(),
     owner_name: z.string().min(3),
-    owner_email: z.string().email()
+    owner_email: z.string().email(),
+    emails_to_invite: z.array(z.string().email()).optional()
 }).refine(data => data.starts_at < data.ends_at, {
     message: "A data de início não pode ser antes da data de término.",
     path: ["starts_at"],
-})
+});
