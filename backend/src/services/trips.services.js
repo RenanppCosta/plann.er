@@ -3,9 +3,7 @@ import { createTripRepository } from "../repositories/trips.repository.js";
 import nodemailer from "nodemailer";
 
 export const createTripService = async (body) => {
-    let { owner_name, owner_email, ...tripData } = body;
-
-    const { destination, starts_at, ends_at } = tripData;
+    let { destination, starts_at, ends_at, owner_name, owner_email } = body;
 
     if(!destination || !starts_at || !ends_at || !owner_email || !owner_name) throw new Error ("Registre todos os campos corretamente!");
 
@@ -26,7 +24,19 @@ export const createTripService = async (body) => {
 
     console.log(nodemailer.getTestMessageUrl(message));
 
-    const trip = createTripRepository(tripData);
+    const trip = await createTripRepository({
+        destination,
+        starts_at,
+        ends_at,
+        participants: {
+            create: {
+                name: owner_name,
+                email: owner_email,
+                is_confirmed: true,
+                is_owner: true,
+            }
+        }
+    });
 
     return trip;
 }

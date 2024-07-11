@@ -1,4 +1,9 @@
 import { prisma } from "../lib/prisma.js";
 
-export const createTripRepository = (body) => prisma.trip.create({data: body});
+export const createTripRepository = (body) => prisma.trip.create({
+    data: body,
+    include: {
+        participants: true
+    }
+});
 
