@@ -10,6 +10,6 @@ export const createTripController = async (req,res) =>{
 
         res.send(trip);
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(400).send(error.message);
     }
 }
